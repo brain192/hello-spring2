@@ -3,20 +3,24 @@ package hello.hello_spring2.service;
 import hello.hello_spring2.domain.Member;
 import hello.hello_spring2.repository.MemberRepository;
 import hello.hello_spring2.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class MemberService {
     //private final MemberRepository memberRepository = new MemoryMemberRepository();
 
     private final MemberRepository memberRepository;
+
+    @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
-    /**
-     * 회원가입
-     */
+    //생성자가 1개만 있으면 @Autowired 생략 가능
+
     public Long join(Member member) {
         validateDuplicateMember(member); //중복 회원 검증
         memberRepository.save(member);
@@ -28,9 +32,7 @@ public class MemberService {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
-    /**
-     * 전체 회원 조회
-     */
+
     public List<Member> findMembers() {
         return memberRepository.findAll();
     }

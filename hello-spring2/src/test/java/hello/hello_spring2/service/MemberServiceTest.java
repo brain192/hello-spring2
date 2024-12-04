@@ -36,6 +36,7 @@ public class MemberServiceTest {
     @Test
     public void 중복_회원_예외() throws Exception {
         //Given
+        //한글로 해도 됨
         Member member1 = new Member();
         member1.setName("spring");
         Member member2 = new Member();
