@@ -1,7 +1,13 @@
 package hello.hello_spring2.controller;
 
+import hello.hello_spring2.domain.Member;
 import hello.hello_spring2.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 public class MemberController {
 
@@ -12,4 +18,21 @@ public class MemberController {
         this.memberService = memberService;
     }
     //DI (Dependency Injection), 의존성 주입
+
+    @PostMapping(value = "/members/new")
+    public String create(MemberForm form) {
+        Member member = new Member();
+        member.setName(form.getName());
+        memberService.join(member);
+        return "redirect:/";
+    }
+    //@PostMapping
+
+    @GetMapping(value = "/members")
+    public String list(Model model) {
+        List<Member> members = memberService.findMembers();
+        model.addAttribute("members", members);
+        return "members/memberList";
+    }
+    //@GetMapping
 }
