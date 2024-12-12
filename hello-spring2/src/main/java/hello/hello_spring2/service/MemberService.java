@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MemberService {
+public class MemberService implements MemberServiceImpl{
     //private final MemberRepository memberRepository = new MemoryMemberRepository();
 
     private final MemberRepository memberRepository;
@@ -21,12 +21,16 @@ public class MemberService {
     }
     //생성자가 1개만 있으면 @Autowired 생략 가능
 
+    public MemberService(MemberRepository memberRepository, String s) {
+        this.memberRepository = memberRepository;
+    }
+
     public Long join(Member member) {
         validateDuplicateMember(member); //중복 회원 검증
         memberRepository.save(member);
         return member.getId();
     }
-    private void validateDuplicateMember(Member member) {
+    public void validateDuplicateMember(Member member) {
         memberRepository.findByName(member.getName())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");

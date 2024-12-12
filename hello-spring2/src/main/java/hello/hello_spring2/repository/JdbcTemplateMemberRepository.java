@@ -28,15 +28,28 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
     public Member save(Member member) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");
+
         Map<String, Object> parameters = new HashMap<>();
+
         parameters.put("name", member.getName());
+
+        System.out.println("================================");
+        System.out.println("**** param:" + parameters.toString());
+        System.out.println("**** save param2:" + parameters.toString());
+        System.out.println("================================");
+
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         member.setId(key.longValue());
+
         return member;
     }
     @Override
     public Optional<Member> findById(Long id) {
         List<Member> result = jdbcTemplate.query("select * from member where id = ?", memberRowMapper(), id);
+
+        System.out.println(">>>>");
+        System.out.println("Member[list]:" + result.toString());
+
         return result.stream().findAny();
     }
     @Override
