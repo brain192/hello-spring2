@@ -10,7 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class JdbcMemberRepository implements MemberRepository {
-
+    /*
+    DataSource
+    java.sql의 패키지 기능을 보조하기 위해 javax.sql패키지에 들어있다
+     */
     private final DataSource dataSource;
 
     public JdbcMemberRepository(DataSource dataSource) {
@@ -19,6 +22,11 @@ public class JdbcMemberRepository implements MemberRepository {
 
     @Override
     public Member save(Member member) {
+        /*
+        Connection 변수명 = null;
+        PreparedStatement 변수명 = null;
+        ResultSet 변수명 = null;
+         */
         String sql = "insert into member(name) values(?)";
         Connection conn = null;
         PreparedStatement pstmt = null;

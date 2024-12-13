@@ -74,7 +74,7 @@ public class MemberController {
         memberService.join(member);
         return "redirect:/";
     }
-    //@PostMapping : HTTP Post Method에 해당하는 단축 표현으로 서버에 리소스를 등록(저장)할 때 사용
+    //@PostMapping : HTTP Post Method에 해당하는 단축 표현으로 서버에 리소스를 등록(저장)할 때 사용 //Hello컨트롤러 주석 참조
 
     @GetMapping(value = "/members")
     public String list(Model model) {
@@ -82,5 +82,5 @@ public class MemberController {
         model.addAttribute("members", members);
         return "members/memberList";
     }
-    //@GetMapping : HTTP Get Method에 해당하는 단축 표현으로 서버의 리소스를 조회할 때 사용
+    //@GetMapping : HTTP Get Method에 해당하는 단축 표현으로 서버의 리소스를 조회할 때 사용 //Hello컨트롤러 주석 참조
 }

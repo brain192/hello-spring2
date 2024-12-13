@@ -52,11 +52,24 @@ public class MemoryMemberRepository implements MemberRepository{
      */
     @Override
     public List<Member> findAll() {
+        /*
+        ArrayList 장단점
+        리스트의 길이가 가변적이다. 이를 동적 할당(dynamic allocation)이라고 한다.
+        배열과 달리 메모리에 연속적으로 나열되어있지 않고 주소로 연결되어있는 형태이기 때문에 index를 통한 색인(접근)속도가 배열보다는 느리다.
+        데이터(element) 사이에 빈 공간을 허용하지 않는다.
+        객체로 데이터를 다루기 때문에 적은양의 데이터만 쓸 경우 배열에 비해 차지하는 메모리가 커진다.
+         */
         return new ArrayList<>(store.values());
     }
 
     @Override
     public Optional<Member> findByName(String name) {
+        /*
+        stream의 filter함수
+        filter() 메서드는 주어진 조건(Predicate)을 만족하는 요소들로 구성된 스트림을 반환
+
+        findAny()는 Stream에서 가장 먼저 탐색되는 요소를 리턴
+         */
         return store.values().stream()
                 .filter(member -> member.getName().equals(name))
                 .findAny();

@@ -20,6 +20,9 @@ public class MemberService implements MemberServiceImpl{
         this.memberRepository = memberRepository;
     }
     //생성자가 1개만 있으면 @Autowired 생략 가능
+    /*
+    하단에는 @Autowired생략
+     */
 
     public MemberService(MemberRepository memberRepository, String s) {
         this.memberRepository = memberRepository;
@@ -32,6 +35,11 @@ public class MemberService implements MemberServiceImpl{
     }
     public void validateDuplicateMember(Member member) {
         memberRepository.findByName(member.getName())
+                /*
+                ifPresent
+                실행구문에서 null이 발생하면 실행되지 않도록함
+                https://sin0824.tistory.com/25 참조
+                 */
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
