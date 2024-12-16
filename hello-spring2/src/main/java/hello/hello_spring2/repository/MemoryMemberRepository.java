@@ -38,6 +38,9 @@ public class MemoryMemberRepository implements MemberRepository{
     Optional는 null이 올 수 있는 값을 감싸는 Wrapper 클래스로, 참조하더라도 NPE가 발생하지 않도록 도와준다.
     https://velog.io/@kjgi73k/JAVA-Optional%EC%97%90-%EB%8C%80%ED%95%B4-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90
     참조해서 공부
+
+    NullPointerException을 방지해주는. 즉, null인 값을 참조해도 NullPointerException이 발생하지 않도록 값을 래퍼로 감싸주는 타입
+    NullPointerException:JAVA에서 해당 문제가 많이 발생함
     */
     @Override
     public Optional<Member> findById(Long id) {

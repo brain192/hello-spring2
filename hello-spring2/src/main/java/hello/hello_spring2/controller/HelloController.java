@@ -38,6 +38,7 @@ public class HelloController {
 
     @RequestParam
     파라미터 이름으로 바인딩한다
+    ex)
     /request-param?username=yum&age=20
     위처럼 요청이 들어오면, username=yum, age=20이 바인딩 된다
      */

@@ -33,7 +33,7 @@ ctrl+alt+<-키로 반대로 이동 가능
 public class MemberController {
 
     //------------------------------------------------------------------
-    //맴버변수
+    //멤버변수
     private final MemberService memberService;
 
     //------------------------------------------------------------------
@@ -53,6 +53,19 @@ public class MemberController {
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
+
+    /*
+    HttpServletRequest
+    http프로토콜의 request 정보를 서블릿에게 전달하기 위한 목적으로 사용한다.
+    헤더정보, 파라미터, 쿠키, URL 등의 정보를 읽어 들이는 메소드를 가지고 있다.
+    Body의 Stream을 읽어 들이는 메소드를 가지고 있다.
+
+    HttpServletResponse
+    WAS는 어떤 클라이언트가 요청을 보냈는지 알고 있고, 해당 클라이언트에게 응답을 보내기 위한
+    HttpServletResponse객체를 생성하여 서블릿에 전달한다.
+    서블릿은 해당 객체를 이용하여 content type, 응답코드, 응답 메시지 등을 전송한다.
+    클라이언트가 서버에게 요청을 보낼 때 굉장히 많은 정보들을 함께 가지고 요청을 하게 된다.
+     */
 
 
 
