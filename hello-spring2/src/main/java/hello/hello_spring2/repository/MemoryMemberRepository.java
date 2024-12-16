@@ -72,6 +72,9 @@ public class MemoryMemberRepository implements MemberRepository{
         filter() 메서드는 주어진 조건(Predicate)을 만족하는 요소들로 구성된 스트림을 반환
 
         findAny()는 Stream에서 가장 먼저 탐색되는 요소를 리턴
+        
+        ==과 equals() 연산의 차이
+        ==는 주소값이 같은지 아닌지 비교하는 것이고, equals()연산도 내부적으로 주소값을 비교하지만 String클래스에서는 equals()를 재정의해 내용을 비교하게 되어있다.
          */
         return store.values().stream()
                 .filter(member -> member.getName().equals(name))
