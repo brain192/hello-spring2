@@ -26,18 +26,27 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
     }
     @Override
     public Member save(Member member) {
+        //SimpleJdbcInsert란 기존 JdbcTemplate를 이용한 Insert보다 손쉽게 데이터를 저장하기 위해 제공하는 구현체
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");
 
+        /*
+        Map을 사용한 파라미터 바인딩
+         */
         Map<String, Object> parameters = new HashMap<>();
 
         parameters.put("name", member.getName());
-
+        /*
+        주석시 참고 사항
+         */
         System.out.println("================================");
         System.out.println("**** param:" + parameters.toString());
         System.out.println("**** save param2:" + parameters.toString());
         System.out.println("================================");
 
+        /*
+        jdbcInsert.executeAndReturnKey() 을 사용해서 INSERT SQL을 실행하고, 생성된 키 값도 매우 편리하게 조회할 수 있다.
+         */
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         member.setId(key.longValue());
 

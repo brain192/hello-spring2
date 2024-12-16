@@ -24,6 +24,11 @@ import java.util.List;
  *
  *
  */
+/*
+ctrl로 어디에서 쓰이는지 확인 가능
+
+ctrl+alt+<-키로 반대로 이동 가능
+ */
 @Controller
 public class MemberController {
 
