@@ -80,6 +80,10 @@ public class MemoryMemberRepository implements MemberRepository{
                 .filter(member -> member.getName().equals(name))
                 .findAny();
     }
+    /*
+    clear()
+    배열이나 리스트의 모든 값을 제거
+     */
     public void clearStore() {
         store.clear();
     }
