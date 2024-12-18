@@ -29,10 +29,14 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//testImplementation 'org.springframework.boot:spring-boot-starter-test' //test_starter
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	//implementation 'org.springframework.boot:spring-boot-starter-jdbc' //jabc연결
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'//mariadb클라이언트
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'//jpa클라이언트
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {//jabc연결
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
 }
 
 tasks.named('test') {
