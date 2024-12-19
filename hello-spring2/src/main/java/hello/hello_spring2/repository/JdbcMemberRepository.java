@@ -75,6 +75,7 @@ public class JdbcMemberRepository implements MemberRepository {
             close(conn, pstmt, rs);
         }
     }
+
     @Override
     public List<Member> findAll() {
         String sql = "select * from member";
@@ -99,6 +100,7 @@ public class JdbcMemberRepository implements MemberRepository {
             close(conn, pstmt, rs);
         }
     }
+
     @Override
     public Optional<Member> findByName(String name) {
         String sql = "select * from member where name = ?";
@@ -123,9 +125,11 @@ public class JdbcMemberRepository implements MemberRepository {
             close(conn, pstmt, rs);
         }
     }
+
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);
     }
+
     private void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
         try {
             if (rs != null) {
