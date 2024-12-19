@@ -58,6 +58,7 @@ public class JdbcMemberRepository implements MemberRepository {
             }
             return member;
         } catch (Exception e) {
+            //IllegalStateException. 대상 객체의 상태가 호출된 메서드를 수행하기에 적절하지 않을 때 발생시킬 수 있는 예외
             throw new IllegalStateException(e);
         } finally {
             close(conn, pstmt, rs);
