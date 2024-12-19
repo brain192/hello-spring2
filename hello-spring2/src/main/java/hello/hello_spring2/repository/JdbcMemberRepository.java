@@ -32,6 +32,20 @@ public class JdbcMemberRepository implements MemberRepository {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
+            /*
+            Statement.RETURN_GENERATED_KEYS
+            jdbc에서 자동 생성키(DB에서 기본키 ex: idx 1,2,3,....~~~~)
+
+            prepareStatement(선처리 방식)이란?
+            바인딩 변수(?)를 사용하여 sql의 반복되는 내용을 쉽게 구현 가능한 Statement이다.
+
+            executeQuery()
+            SELECT 문과 같은 쿼리문을 실행할 때 사용한다.
+            쿼리를 실행하고, 결과를 ResultSet 객체로 반환한다.
+
+            executeUpdate()
+            INSERT, UPDATE, DELETE와 같은 DML(Data Manipulation Language)에서 실행 결과로 영향을 받은 레코드 수를 반환
+             */
             conn = getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, member.getName());
