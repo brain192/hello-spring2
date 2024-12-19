@@ -72,11 +72,17 @@ public class Member {
     jpa방식용
 */
 
+/*
+Entity
+실제 DataBase의 테이블과 1 : 1로 매핑되는 클래스
+ */
 @Entity
 public class Member {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
     public Long getId() {
         return id;
     }

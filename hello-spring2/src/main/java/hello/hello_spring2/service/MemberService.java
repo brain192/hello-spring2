@@ -44,6 +44,7 @@ public class MemberService {
         memberRepository.save(member);
         return member.getId();
     }
+
     public void validateDuplicateMember(Member member) {
         memberRepository.findByName(member.getName())
                 /*

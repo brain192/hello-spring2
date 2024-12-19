@@ -9,6 +9,8 @@ import java.util.Optional;
 /*
 12/18 개인과제
 jpa방식과 jabc방식의 차이 이해
+
+스프링 데이터 JDBC는 성능 최적화와 직접적인 SQL 제어에 유리한 반면, JPA는 객체 지향적인 프로그래밍과 복잡한 매핑 작업에 유리
  */
 public class JpaMemberRepository implements MemberRepository {
     private final EntityManager em;

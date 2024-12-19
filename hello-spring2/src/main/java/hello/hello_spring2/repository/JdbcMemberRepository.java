@@ -153,6 +153,11 @@ public class JdbcMemberRepository implements MemberRepository {
             e.printStackTrace();
         }
     }
+
+    /*
+    releaseConnection()은 동기화된 커넥션은 닫지 않고 그대로 유지하고,
+    트랜잭션 동기화 매니저가 관리하는 커넥션이 없는 경우는 바로 커넥션을 닫는다.
+     */
     private void close(Connection conn) throws SQLException {
         DataSourceUtils.releaseConnection(conn, dataSource);
     }
