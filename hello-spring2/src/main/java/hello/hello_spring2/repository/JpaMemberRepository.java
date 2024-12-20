@@ -13,22 +13,35 @@ jpa방식과 jabc방식의 차이 이해
 스프링 데이터 JDBC는 성능 최적화와 직접적인 SQL 제어에 유리한 반면, JPA는 객체 지향적인 프로그래밍과 복잡한 매핑 작업에 유리
  */
 public class JpaMemberRepository implements MemberRepository {
+    /*
+    EntityManager
+    엔티티를 관리하는 역할
+    에티티 매니저 내부에는 영속성 컨텍스트가 있으며 이를 통해 엔티티관리
+
+    영속성 컨텍스트
+    엔티티를 영구 저장하는 환경
+     */
     private final EntityManager em;
+
     public JpaMemberRepository(EntityManager em) {
         this.em = em;
     }
+
     public Member save(Member member) {
         em.persist(member);
         return member;
     }
+
     public Optional<Member> findById(Long id) {
         Member member = em.find(Member.class, id);
         return Optional.ofNullable(member);
     }
+
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
     }
+
     public Optional<Member> findByName(String name) {
         List<Member> result = em.createQuery("select m from Member m where m.name = :name", Member.class)
                 .setParameter("name", name)
