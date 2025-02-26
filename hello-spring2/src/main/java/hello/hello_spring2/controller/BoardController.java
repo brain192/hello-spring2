@@ -14,7 +14,7 @@ public class BoardController {
     public BoardController(BoardService boardService) {
         this.boardService = boardService;
     }
-
+    /*
     @GetMapping
     public List<Board> getAllBoards() {
         return boardService.getAllBoards();
@@ -40,4 +40,6 @@ public class BoardController {
     public void deleteBoard(@PathVariable Long id) {
         boardService.deleteBoard(id);
     }
+
+     */
 }

@@ -15,13 +15,30 @@ public class BoardRepository2 {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // 게시글 저장 (파일 포함)
+    public int save(Board2 board) {
+        return jdbcTemplate.update(
+                "INSERT INTO board (title, content, filename) VALUES (?, ?, ?)",
+                board.getTitle(), board.getContent(), board.getFilename());
+    }
+
+    // 특정 게시글 조회 (파일 다운로드 시 필요)
+    public Board2 findById(Long id) {
+        return jdbcTemplate.queryForObject(
+                "SELECT * FROM board WHERE id = ?",
+                (rs, rowNum) -> new Board2(
+                        rs.getLong("id"), rs.getString("title"),
+                        rs.getString("content"), rs.getString("filename")),
+                id);
+    }
+
     private final RowMapper<Board2> boardRowMapper = (rs, rowNum) ->
             new Board2(rs.getLong("id"), rs.getString("title"), rs.getString("content"));
 
     public List<Board2> findAll() {
         return jdbcTemplate.query("SELECT * FROM board ORDER BY id DESC", boardRowMapper);
     }
-
+    /*
     public Board2 findById(Long id) {
         return jdbcTemplate.queryForObject("SELECT * FROM board WHERE id = ?", boardRowMapper, id);
     }
@@ -30,6 +47,7 @@ public class BoardRepository2 {
         return jdbcTemplate.update("INSERT INTO board (title, content) VALUES (?, ?)",
                 board.getTitle(), board.getContent());
     }
+     */
 
     public int update(Board2 board) {
         return jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE id = ?",
