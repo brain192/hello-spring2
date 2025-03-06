@@ -21,11 +21,19 @@ public class Board2 {
         this.filename = filename;
     }
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public void setTitle(String title) { this.title = title; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public void setContent(String content) { this.content = content; }
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-    public void setFilename(String filename) { this.filename = filename; }
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 }

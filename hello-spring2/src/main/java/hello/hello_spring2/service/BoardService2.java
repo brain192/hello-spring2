@@ -40,6 +40,8 @@ public class BoardService2 {
         return boardRepository.findAll();
     }
 
+
+
     // 특정 게시글 조회
     public Board2 getBoardById(Long id) {
         return boardRepository.findById(id);
