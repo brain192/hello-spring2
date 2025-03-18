@@ -18,6 +18,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/*
+
+ */
 @Controller
 @RequestMapping("/boards")
 public class BoardController2 {
@@ -29,6 +32,9 @@ public class BoardController2 {
 
     @GetMapping
     public String list(Model model) {
+        /*
+        리스트타입
+         */
         List<Board2> boards = boardService.getAllBoards();
         model.addAttribute("boards", boards);
         return "list";
@@ -73,7 +79,7 @@ public class BoardController2 {
         return "redirect:/boards";
     }
 
-    // 파일 다운로드
+    // 파일 다운로드 //현재 잘 되지 않음
     @GetMapping("/{id}/download")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id) throws MalformedURLException {
         Board2 board = boardService.getBoardById(id);

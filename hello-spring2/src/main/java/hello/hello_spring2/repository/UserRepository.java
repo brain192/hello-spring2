@@ -2,7 +2,9 @@ package hello.hello_spring2.repository;
 
 import hello.hello_spring2.domain.User;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UserRepository {
     private final JdbcTemplate jdbcTemplate;
 

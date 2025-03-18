@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class Board2 {
     // Getter & Setter
-    private Long id;       // 게시글 ID
+    private Long id;       // 게시글 ID 기본키(진짜 만든다면 아이디는 별개로 해야됨)
     private String title;  // 게시글 제목
     private String content; // 게시글 내용
     private String filename; // 업로드된 파일명

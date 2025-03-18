@@ -3,7 +3,9 @@ package hello.hello_spring2.service;
 import hello.hello_spring2.domain.User;
 import hello.hello_spring2.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

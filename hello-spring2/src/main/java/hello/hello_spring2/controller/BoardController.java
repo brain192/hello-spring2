@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
+게시판 jpa로 진행하려고 했으나 jdbc로 진행중 board2
+ */
 @RestController
 @RequestMapping("/boardsaa")
 public class BoardController {
