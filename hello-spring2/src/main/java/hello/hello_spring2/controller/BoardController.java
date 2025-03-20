@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /*
-게시판 jpa로 진행하려고 했으나 jdbc로 진행중 board2
+게시판 board2로 진행함
  */
 @RestController
 @RequestMapping("/boardsaa")
