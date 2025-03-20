@@ -40,6 +40,13 @@ public class BoardController2 {
         return "list";
     }
 
+    /**
+     *
+     * @param id
+     * @param model
+     * @return
+     * PathVariable 이란? 경로 변수를 표시하기 위해 메서드에 매개변수에 사용
+     */
     @GetMapping("/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
         Board2 board = boardService.getBoardById(id);
@@ -47,18 +54,27 @@ public class BoardController2 {
         return "detail";
     }
 
+    /**
+     * 게시판 작성폼
+     * @return
+     */
     @GetMapping("/new")
     public String newForm() {
         return "new";
     }
 
-    // 게시글 저장 (파일 업로드 포함)
+    /**
+     * 📌 게시글 저장 처리 (파일 업로드 포함)
+     */
     @PostMapping
     public String create(@ModelAttribute Board2 board, @RequestParam("file") MultipartFile file) throws IOException {
         boardService.createBoard(board, file);
         return "redirect:/boards";
     }
 
+    /**
+     * 📌 게시글 수정
+     */
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable("id") Long id, Model model) {
         Board2 board = boardService.getBoardById(id);
@@ -66,6 +82,9 @@ public class BoardController2 {
         return "edit";
     }
 
+    /**
+     * 📌 게시글 수정 처리 (파일 업로드 포함)
+     */
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Long id, @ModelAttribute Board2 board) {
         board.setId(id);
@@ -73,6 +92,9 @@ public class BoardController2 {
         return "redirect:/boards";
     }
 
+    /**
+     * 📌 게시글 삭제 처리
+     */
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         boardService.deleteBoard(id);
