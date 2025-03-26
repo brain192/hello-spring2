@@ -6,10 +6,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/boards/**") // 게시판 관련 페이지에만 적용
-                .excludePathPatterns("/auth/**"); // 로그인/회원가입 페이지는 제외
+                .excludePathPatterns("/auth/**","/"); // 로그인/회원가입 페이지는 제외
     }
+
+
 }
