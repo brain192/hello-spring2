@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>로또 번호 생성기</title>
+</head>
+<body>
+<h1>🎉 생성된 로또 번호 🎉</h1>
+
+<p>
+  <span th:each="num : ${lottoNumbers}" th:text="${num} + ' '" style="font-size: 24px;"/>
+</p>
+
+<a href="/lotto">새로 생성하기</a>
+</body>
+</html>
