@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <title>게시글 상세</title>
-</head>
+<head><title>글 상세</title></head>
 <body>
-<h1>게시글 상세</h1>
+<h2 th:text="${board.title}">제목</h2>
+<p th:text="${board.content}">내용</p>
 
-<p><strong>제목:</strong> <span th:text="${board.title}"></span></p>
-<p><strong>내용:</strong> <span th:text="${board.content}"></span></p>
+<!-- 파일이 있을 때만 다운로드 링크 제공 -->
+<div th:if="${board.originalFilename}">
+  첨부파일:
+  <a th:href="@{'/boards/download/' + ${board.id}}" th:text="${board.originalFilename}"></a>
+</div>
 
-<!-- 파일 다운로드 버튼 -->
-<p th:if="${board.filename}">
-  첨부파일: <a th:href="@{/boards/{id}/download(id=${board.id})}" download>
-  <button>파일 다운로드</button>
-</a>
-</p>
-
-<br>
 <a href="/boards">목록으로</a>
 </body>
 </html>

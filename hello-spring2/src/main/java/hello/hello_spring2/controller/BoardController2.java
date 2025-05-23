@@ -2,7 +2,8 @@ package hello.hello_spring2.controller;
 
 
 import hello.hello_spring2.domain.Board2;
-import hello.hello_spring2.service.BoardService2;
+import hello.hello_spring2.repository.BoardRepository2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -13,10 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 /*
 
@@ -24,96 +28,74 @@ import java.util.List;
 @Controller
 @RequestMapping("/boards")
 public class BoardController2 {
-    private final BoardService2 boardService;
+    private final BoardRepository2 boardRepository;
 
-    public BoardController2(BoardService2 boardService) {
-        this.boardService = boardService;
+    // 파일 저장 경로 (application.properties에서 주입)
+    @Value("${file.upload-dir}")
+    private String uploadDir;
+
+    public BoardController2(BoardRepository2 boardRepository) {
+        this.boardRepository = boardRepository;
     }
 
+    // 게시글 목록 페이지
     @GetMapping
     public String list(Model model) {
-        /*
-        리스트타입
-         */
-        List<Board2> boards = boardService.getAllBoards();
+        List<Board2> boards = boardRepository.findAll();
         model.addAttribute("boards", boards);
         return "list";
     }
 
-    /**
-     *
-     * @param id
-     * @param model
-     * @return
-     * PathVariable 이란? 경로 변수를 표시하기 위해 메서드에 매개변수에 사용
-     */
-    @GetMapping("/{id}")
-    public String detail(@PathVariable("id") Long id, Model model) {
-        Board2 board = boardService.getBoardById(id);
+    // 게시글 작성 폼
+    @GetMapping("/write")
+    public String writeForm() {
+        return "write";
+    }
+
+    // 게시글 등록 + 파일 업로드 처리
+    @PostMapping
+    public String create(@RequestParam String title,
+                         @RequestParam String content,
+                         @RequestParam("file") MultipartFile file) throws IOException {
+
+        String originalFilename = file.getOriginalFilename();
+        String storedFilename = UUID.randomUUID() + "_" + originalFilename;
+
+        Path path = Paths.get(uploadDir).resolve(storedFilename);
+        Files.createDirectories(path.getParent());
+        file.transferTo(path.toFile());
+
+        Board2 board = new Board2();
+        board.setTitle(title);
+        board.setContent(content);
+        board.setWriter("익명");
+        board.setOriginalFilename(originalFilename);
+        board.setFilename(storedFilename);
+
+        boardRepository.save(board);
+        return "redirect:/boards";
+    }
+
+    // 게시글 상세 보기
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable Long id, Model model) {
+        Board2 board = boardRepository.findById(id).orElseThrow();
         model.addAttribute("board", board);
         return "detail";
     }
 
-    /**
-     * 게시판 작성폼
-     * @return
-     */
-    @GetMapping("/new")
-    public String newForm() {
-        return "new";
-    }
+    // 첨부파일 다운로드 처리
+    @GetMapping("/download/{id}")
+    public ResponseEntity<Resource> download(@PathVariable Long id) throws IOException {
+        Board2 board = boardRepository.findById(id).orElseThrow();
 
-    /**
-     * 📌 게시글 저장 처리 (파일 업로드 포함)
-     */
-    @PostMapping
-    public String create(@ModelAttribute Board2 board, @RequestParam("file") MultipartFile file) throws IOException {
-        boardService.createBoard(board, file);
-        return "redirect:/boards";
-    }
+        Path path = Paths.get(uploadDir).resolve(board.getFilename());
+        Resource resource = new UrlResource(path.toUri());
 
-    /**
-     * 📌 게시글 수정
-     */
-    @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable("id") Long id, Model model) {
-        Board2 board = boardService.getBoardById(id);
-        model.addAttribute("board", board);
-        return "edit";
-    }
-
-    /**
-     * 📌 게시글 수정 처리 (파일 업로드 포함)
-     */
-    @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @ModelAttribute Board2 board) {
-        board.setId(id);
-        boardService.updateBoard(board);
-        return "redirect:/boards";
-    }
-
-    /**
-     * 📌 게시글 삭제 처리
-     */
-    @GetMapping("/{id}/delete")
-    public String delete(@PathVariable("id") Long id) {
-        boardService.deleteBoard(id);
-        return "redirect:/boards";
-    }
-
-    // 파일 다운로드 //현재 잘 되지 않음
-    @GetMapping("/{id}/download")
-    public ResponseEntity<Resource> downloadFile(@PathVariable Long id) throws MalformedURLException {
-        Board2 board = boardService.getBoardById(id);
-        if (board.getFilename() == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Path filePath = Paths.get("uploads/").resolve(board.getFilename()).normalize();
-        Resource resource = new UrlResource(filePath.toUri());
-
+        // 파일 이름 인코딩 처리
+        String encodedName = URLEncoder.encode(board.getOriginalFilename(), StandardCharsets.UTF_8);
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + board.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodedName + "\"")
                 .body(resource);
     }
 }
