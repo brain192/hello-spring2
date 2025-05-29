@@ -54,8 +54,8 @@ public class BoardController2 {
 
     // 게시글 등록 + 파일 업로드 처리
     @PostMapping
-    public String create(@RequestParam String title,
-                         @RequestParam String content,
+    public String create(@RequestParam("title") String title,
+                         @RequestParam("content") String content,
                          @RequestParam("file") MultipartFile file) throws IOException {
 
         String originalFilename = file.getOriginalFilename();

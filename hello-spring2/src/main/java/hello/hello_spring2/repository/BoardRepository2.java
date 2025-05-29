@@ -17,7 +17,7 @@ public class BoardRepository2 {
     }
 
     // 게시글 저장
-    public void save(Board2 board) {
+    public void save(@org.jetbrains.annotations.NotNull Board2 board) {
         jdbcTemplate.update("INSERT INTO board (title, content, writer, filename, original_filename) VALUES (?, ?, ?, ?, ?)",
                 board.getTitle(), board.getContent(), board.getWriter(), board.getFilename(), board.getOriginalFilename());
     }
