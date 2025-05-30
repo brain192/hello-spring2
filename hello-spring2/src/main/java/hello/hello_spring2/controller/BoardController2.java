@@ -78,7 +78,7 @@ public class BoardController2 {
 
     // 게시글 상세 보기
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable Long id, Model model) {
+    public String detail(@PathVariable("id") Long id, Model model) {
         Board2 board = boardRepository.findById(id).orElseThrow();
         model.addAttribute("board", board);
         return "detail";
