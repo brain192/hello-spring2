@@ -26,7 +26,7 @@ import java.util.UUID;
 
  */
 @Controller
-@RequestMapping("/boards")
+@RequestMapping("/boardss")
 public class BoardController2 {
     private final BoardRepository2 boardRepository;
 
@@ -43,13 +43,13 @@ public class BoardController2 {
     public String list(Model model) {
         List<Board2> boards = boardRepository.findAll();
         model.addAttribute("boards", boards);
-        return "list";
+        return "lists";
     }
 
     // 게시글 작성 폼
-    @GetMapping("/write")
+    @GetMapping("/writes")
     public String writeForm() {
-        return "write";
+        return "writes";
     }
 
     // 게시글 등록 + 파일 업로드 처리
@@ -73,19 +73,19 @@ public class BoardController2 {
         board.setFilename(storedFilename);
 
         boardRepository.save(board);
-        return "redirect:/boards";
+        return "redirect:/boardss";
     }
 
     // 게시글 상세 보기
-    @GetMapping("/detail/{id}")
+    @GetMapping("/details/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
         Board2 board = boardRepository.findById(id).orElseThrow();
         model.addAttribute("board", board);
-        return "detail";
+        return "details";
     }
 
     // 첨부파일 다운로드 처리
-    @GetMapping("/download/{id}")
+    @GetMapping("/downloads/{id}")
     public ResponseEntity<Resource> download(@PathVariable Long id) throws IOException {
         Board2 board = boardRepository.findById(id).orElseThrow();
 
