@@ -56,7 +56,7 @@ public class BoardController3 {
      * 게시글 상세 보기
      */
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable Long id, Model model) {
+    public String detail(@PathVariable("id") Long id, Model model) {
         Board3 board = boardService.get(id);
         model.addAttribute("board", board);
         return "detail"; // detail.html로 이동
@@ -66,7 +66,7 @@ public class BoardController3 {
      * 파일 다운로드 처리
      */
     @GetMapping("/download/{id}")
-    public ResponseEntity<Resource> download(@PathVariable Long id) throws Exception {
+    public ResponseEntity<Resource> download(@PathVariable("id") Long id) throws Exception {
         Board3 board = boardService.get(id);
         File file = boardService.getFile(board.getFilename());
 

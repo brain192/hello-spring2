@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 상세보기</title>
+</head>
+<body>
+<h1>게시글 상세보기</h1>
+
+<!-- 게시글 상세 정보 출력 -->
+<p><strong>제목:</strong> <span th:text="${board.title}">제목</span></p>
+<p><strong>내용:</strong> <span th:text="${board.content}">내용</span></p>
+<p><strong>작성자:</strong> <span th:text="${board.writer}">작성자</span></p>
+
+<!-- 첨부파일이 있을 경우 다운로드 링크 표시 -->
+<div th:if="${board.originalFilename != null}">
+  <p>
+    <strong>첨부파일:</strong>
+    <a th:href="@{/download/{id}(id=${board.id})}"
+       th:text="${board.originalFilename}">파일명</a>
+  </p>
+</div>
+
+<br>
+<a th:href="@{/list}">목록으로</a>
+</body>
+</html>
