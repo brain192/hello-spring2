@@ -2,9 +2,7 @@ package hello.hello_spring2.service;
 
 import hello.hello_spring2.domain.Member;
 import hello.hello_spring2.repository.MemberRepository;
-import hello.hello_spring2.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -79,5 +77,8 @@ public class MemberService {
     }
     public Optional<Member> findOne(Long memberId) {
         return memberRepository.findById(memberId);
+    }
+
+    public static class MemberService2 {
     }
 }

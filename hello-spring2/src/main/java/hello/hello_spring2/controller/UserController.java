@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/auth")
+@RequestMapping("/authsss")
 public class UserController {
     private final UserRepository userRepository;
 
@@ -15,23 +15,23 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/register")
+    @GetMapping("/registersss")
     public String registerForm() {
         return "/auth/register";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registersss")
     public String register(@RequestParam String username,
                            @RequestParam String password,
                            @RequestParam String name) {
         if (userRepository.findByUsername(username).isPresent()) {
-            return "redirect:/auth/register?error=true";
+            return "redirect:/auth/registersss?error=true";
         }
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         User user = new User(null, username, hashedPassword, name, null);
         userRepository.save(user);
 
-        return "redirect:/auth/login";
+        return "redirect:/auth/loginsss";
     }
 }
