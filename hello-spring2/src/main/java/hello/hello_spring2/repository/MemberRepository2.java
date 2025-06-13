@@ -19,4 +19,18 @@ public class MemberRepository2 {
         String sql = "INSERT INTO member (username, password) VALUES (?, ?)";
         jdbcTemplate.update(sql, member.getUsername(), member.getPassword());
     }
+
+    public Member2 findByUsernameAndPassword(String username, String password) {
+        String sql = "SELECT * FROM member WHERE username = ? AND password = ?";
+        return jdbcTemplate.query(sql, new Object[]{username, password}, rs -> {
+            if (rs.next()) {
+                Member2 m = new Member2();
+                m.setId(rs.getLong("id"));
+                m.setUsername(rs.getString("username"));
+                m.setPassword(rs.getString("password"));
+                return m;
+            }
+            return null;
+        });
+    }
 }

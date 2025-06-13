@@ -20,4 +20,8 @@ public class MemberService2 {
         // 향후 비밀번호 암호화, 중복 확인 등을 추가할 수 있음
         repository.save(member);
     }
+
+    public Member2 login(String username, String password) {
+        return repository.findByUsernameAndPassword(username, password);
+    }
 }
