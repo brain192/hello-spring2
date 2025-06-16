@@ -27,17 +27,17 @@ public class MemberController2 {
     @PostMapping("/register")
     public String register(@ModelAttribute Member2 member) {
         service.register(member); // 회원가입 처리
-        return "redirect:/login"; // 로그인 페이지로 이동
+        return "redirect:/logins"; // 로그인 페이지로 이동
     }
 
-    @GetMapping("/login")
+    @GetMapping("/logins")
     public String loginForm() {
-        return "login";
+        return "logins";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam String username,
-                        @RequestParam String password,
+    @PostMapping("/logins")
+    public String login(@RequestParam("username")  String username,
+                        @RequestParam("password")  String password,
                         HttpSession session,
                         Model model) {
         Member2 loginMember = service.login(username, password);
@@ -46,13 +46,18 @@ public class MemberController2 {
             return "redirect:/welcome"; // 로그인 성공 시 페이지 이동
         } else {
             model.addAttribute("loginError", "아이디 또는 비밀번호가 틀렸습니다.");
-            return "login"; // 다시 로그인 화면
+            return "logins"; // 다시 로그인 화면
         }
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // 세션 초기화
-        return "redirect:/login";
+        return "redirect:/logins";
+    }
+
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "welcome"; // welcome.html 페이지
     }
 }
