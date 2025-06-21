@@ -37,15 +37,15 @@ public class BoardService3 {
 
             // 업로드 디렉토리 생성 (없을 시)
             File dir = new File(uploadDir);
-            if (!dir.exists()) dir.mkdirs();
+            if (!dir.exists()) dir.mkdirs();//경로 없을시 생성
 
             // 실제 파일 저장
             File saveFile = new File(uploadDir, filename);
             file.transferTo(saveFile);
 
             // board 객체에 파일 정보 저장
-            board.setFilename(filename);
-            board.setOriginalFilename(originalFilename);
+            board.setFilename(filename);//파일이름저장
+            board.setOriginalFilename(originalFilename);//원본 파일이름 저장
         }
 
         // DB 저장

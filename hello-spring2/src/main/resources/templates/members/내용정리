@@ -48,7 +48,7 @@ public MemberController(MemberService service) {
 }
 
 
-MemberController	회원 관련 요청을 처리하는 컨트롤러 클래스입니다.
+MemberController	    회원 관련 요청을 처리하는 컨트롤러 클래스입니다.
 MemberService service	Spring이 자동으로 주입해주는 서비스 객체입니다.
 this.service = service;	외부에서 전달받은 service 객체를 이 클래스의 필드에 저장합니다.
 
@@ -73,7 +73,7 @@ Lombok의 @RequiredArgsConstructor 사용 가능
 정의 위치 	상속 관계에서 자식 클래스
 메서드 이름	같아야 함
 매개변수		같아야 함
-리턴 타입		같거나 서브 타입
+리턴 타입	같거나 서브 타입
 접근 제어자	부모보다 좁으면 안 됨
 어노테이션	@Override 사용 권장
 
@@ -85,11 +85,11 @@ Lombok의 @RequiredArgsConstructor 사용 가능
 같은 이름의 메서드를 매개변수의 타입/개수만 다르게 정의하는 것
 
 📌 특징
-항목		내용
-정의 위치		같은 클래스 or 같은 scope 내
+항목		    내용
+정의 위치	같은 클래스 or 같은 scope 내
 메서드 이름	같아야 함
 매개변수		타입, 개수, 순서가 달라야 함
-리턴 타입		같을 수도, 달라도 됨 (중복 판단에는 영향 없음)
+리턴 타입	같을 수도, 달라도 됨 (중복 판단에는 영향 없음)
 
 🔍 목적
 다양한 형태의 입력을 처리하기 위해
@@ -147,11 +147,11 @@ Lombok
 여러 Lombok 어노테이션을 한 번에 묶어주는 종합형 어노테이션입니다.
 주로 DTO, Entity 클래스 등에 사용되며, 필수적인 메서드를 자동 생성해줍니다.
 
-포함된 어노테이션		설명
-@Getter			모든 필드에 대해 getter 생성
-@Setter			모든 필드에 대해 setter 생성
-@ToString		toString() 자동 생성
-@EqualsAndHashCode	equals()와 hashCode() 자동 생성
+포함된 어노테이션		        설명
+@Getter			            모든 필드에 대해 getter 생성
+@Setter			            모든 필드에 대해 setter 생성
+@ToString		            toString() 자동 생성
+@EqualsAndHashCode	        equals()와 hashCode() 자동 생성
 @RequiredArgsConstructor	final 또는 @NonNull 필드만 포함한 생성자 생성
 
 DTO
