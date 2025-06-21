@@ -2,9 +2,11 @@ package hello.hello_spring2.controller;
 
 import hello.hello_spring2.domain.Board3;
 import hello.hello_spring2.service.BoardService3;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +40,10 @@ public class BoardController3 {
      * 게시글 작성 폼
      */
     @GetMapping("/write")
-    public String writeForm(Model model) {
+    public String writeForm(Model model, HttpSession session) {
+        if (session.getAttribute("loginMember") == null) {
+            return "redirect:/logins"; // 로그인 안 했으면 로그인 페이지로
+        }
         model.addAttribute("board", new Board3());
         return "write";
     }
@@ -66,10 +71,16 @@ public class BoardController3 {
      * 파일 다운로드 처리
      */
     @GetMapping("/download/{id}")
-    public ResponseEntity<Resource> download(@PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<Resource> download(@PathVariable("id") Long id, HttpSession session) throws Exception {
         Board3 board = boardService.get(id);
         File file = boardService.getFile(board.getFilename());
-
+        if (session.getAttribute("loginMember") == null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // 로그인 안되도록 방지
+            /*
+            HttpStatus.FORBIDDEN은 웹 개발에서 자주 등장하는 HTTP 상태 코드입니다.
+            Spring Boot에서도 이를 통해 접근 거부(권한 없음) 상황을 명확하게 처리할 수 있습니다.
+             */
+        }
         // 파일 다운로드를 위한 Resource 생성
         Resource resource = new FileSystemResource(file);
         String encodedFilename = URLEncoder.encode(board.getOriginalFilename(), StandardCharsets.UTF_8);

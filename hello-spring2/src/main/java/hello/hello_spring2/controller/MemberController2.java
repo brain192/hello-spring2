@@ -50,7 +50,7 @@ public class MemberController2 {
         }
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/logouts")
     public String logout(HttpSession session) {
         session.invalidate(); // 세션 초기화
         return "redirect:/logins";
