@@ -1,6 +1,8 @@
 package hello.hello_spring2.repository;
 
 import hello.hello_spring2.domain.Member2;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -8,12 +10,16 @@ import org.springframework.stereotype.Repository;
  * 회원 정보 DB 처리 클래스
  */
 @Repository
+@RequiredArgsConstructor
 public class MemberRepository2 {
     private final JdbcTemplate jdbcTemplate;
 
+    /*
     public MemberRepository2(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+     */
 
     public void save(Member2 member) {
         String sql = "INSERT INTO member (username, password) VALUES (?, ?)";
@@ -32,5 +38,13 @@ public class MemberRepository2 {
             }
             return null;
         });
+    }
+
+    /**
+     * 아이디로 회원 조회 (로그인 시 사용).
+     */
+    public Member2 findByUsername(String username) {
+        String sql = "SELECT * FROM member WHERE username = ?";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Member2.class), username);
     }
 }

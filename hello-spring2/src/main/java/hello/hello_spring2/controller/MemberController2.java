@@ -1,8 +1,11 @@
 package hello.hello_spring2.controller;
 
 import hello.hello_spring2.domain.Member2;
+import hello.hello_spring2.repository.MemberRepository2;
 import hello.hello_spring2.service.MemberService2;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +14,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
 public class MemberController2 {
 
     private final MemberService2 service;
-
+    /*
     public MemberController2(MemberService2 service) {
         this.service = service;
     }
+
+     */
+
+    private final MemberRepository2 memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/register")
     public String registerForm() {
@@ -26,7 +35,8 @@ public class MemberController2 {
 
     @PostMapping("/register")
     public String register(@ModelAttribute Member2 member) {
-        service.register(member); // 회원가입 처리
+        member.setPassword(passwordEncoder.encode(member.getPassword()));  // 비밀번호 암호화
+        memberRepository.save(member);
         return "redirect:/logins"; // 로그인 페이지로 이동
     }
 
